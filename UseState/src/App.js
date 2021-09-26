@@ -1,25 +1,39 @@
-/* eslint-disable no-undef */
-import P from 'prop-types';
+import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  console.log('Pai, renderizou!');
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((r) => r.json())
-      .then((r) => setPosts(r));
-  }, []);
+  const [reverse, setReverse] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const reverseClass = reverse ? 'reverse' : '';
+
+  const handleClick = () => {
+    setReverse(!reverse);
+  };
+
+  const handleIncrement = () => {
+    setCounter((prevState) => prevState + 1);
+  };
+
   return (
     <div className="App">
-      {posts.map((post) => {
-        return (
-          <div key={post.id} className="post">
-            <h1>{post.title}</h1>
-            <p>{post.body}</p>
-          </div>
-        );
-      })}
+      <header className="App-header">
+        <img src={logo} className={`App-logo ${reverseClass}`} alt="logo" />
+
+        <h1>Contador: {counter}</h1>
+
+        <p>
+          <button type="button" onClick={handleClick}>
+            Reverse {reverseClass}
+          </button>
+        </p>
+
+        <p>
+          <button type="button" onClick={handleIncrement}>
+            Increment {counter}
+          </button>
+        </p>
+      </header>
     </div>
   );
 }
